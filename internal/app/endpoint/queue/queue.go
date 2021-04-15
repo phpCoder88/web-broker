@@ -1,4 +1,4 @@
-package endpoint
+package queue
 
 import (
 	"net/http"
@@ -19,16 +19,4 @@ func RegisterPublicHTTP(queueSvc queueSvc) *mux.Router {
 	r.HandleFunc("/{queue}", getFromQueue(queueSvc)).Methods(http.MethodGet)
 
 	return r
-}
-
-func putToQueue(queueSvc queueSvc) http.HandlerFunc {
-	return func(w http.ResponseWriter, request *http.Request) {
-		// TODO: parse req and call queueSvc.Put(...)
-	}
-}
-
-func getFromQueue(queueSvc queueSvc) http.HandlerFunc {
-	return func(w http.ResponseWriter, request *http.Request) {
-		// TODO: parse req and call queueSvc.Get(...)
-	}
 }

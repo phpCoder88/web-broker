@@ -11,10 +11,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/phpCoder88/web-broker/internal/app/endpoint"
-
+	"github.com/phpCoder88/web-broker/internal/app/endpoint/queue"
 	"github.com/phpCoder88/web-broker/internal/app/service"
-	"github.com/phpCoder88/web-broker/internal/pkg/repository"
+	"github.com/phpCoder88/web-broker/internal/pkg/repository/file"
 )
 
 func main() {
@@ -24,12 +23,12 @@ func main() {
 	storageName := flag.String("storage", "storage.json", "data storage")
 	shutdownTimeout := flag.Int64("shutdown_timeout", 3, "shutdown timeout")
 
-	repo := repository.NewFileRepo(*storageName)
+	repo := file.New(*storageName)
 	svc := service.New(repo)
 
 	serv := http.Server{
 		Addr:    net.JoinHostPort("", *port),
-		Handler: endpoint.RegisterPublicHTTP(svc),
+		Handler: queue.RegisterPublicHTTP(svc),
 	}
 	go func() {
 		if err := serv.ListenAndServe(); err != nil {
