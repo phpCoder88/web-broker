@@ -2,6 +2,6 @@ package memory
 
 type Repo struct{}
 
-func NewRepo() *Repo {
+func New() *Repo {
 	return &Repo{}
 }

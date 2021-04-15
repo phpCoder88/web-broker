@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/phpCoder88/web-broker/internal/app/endpoint/queue"
-	"github.com/phpCoder88/web-broker/internal/pkg/repository/file"
 	"log"
 	"net"
 	"net/http"
@@ -13,7 +11,9 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/phpCoder88/web-broker/internal/app/endpoint/queue"
 	"github.com/phpCoder88/web-broker/internal/app/service"
+	"github.com/phpCoder88/web-broker/internal/pkg/repository/file"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 	storageName := flag.String("storage", "storage.json", "data storage")
 	shutdownTimeout := flag.Int64("shutdown_timeout", 3, "shutdown timeout")
 
-	repo := file.NewRepo(*storageName)
+	repo := file.New(*storageName)
 	svc := service.New(repo)
 
 	serv := http.Server{
